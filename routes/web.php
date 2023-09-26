@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Resources\UsersResource;
+use App\Models\Account;
+use App\Models\Currency;
+use App\Models\User;
+use App\Services\TransactionService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{any?}', function () {
+    return view('app');
 });

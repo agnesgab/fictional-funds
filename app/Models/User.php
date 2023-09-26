@@ -42,4 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class);
+    }
+
+    public function getAccountCreatedAtAttribute()
+    {
+        return 'creaed at 12-12-1222';
+    }
 }
