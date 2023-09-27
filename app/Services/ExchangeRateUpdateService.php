@@ -16,11 +16,12 @@ class ExchangeRateUpdateService
 
     public function execute()
     {
-        $baseCurrency = $this->data['base'];
-        $this->updateBaseCurrency($baseCurrency);
+        if (isset($this->data['base']) && isset($this->data['rates'])) {
+            $this->updateBaseCurrency($this->data['base']);
+            $this->updateExchangeRates($this->data['rates']);
+        }
 
-        $exchangeRates = $this->data['rates'];
-        $this->updateExchangeRates($exchangeRates);
+        return false;
     }
 
     public function updateBaseCurrency(string $baseCurrency)

@@ -1,6 +1,9 @@
 <template>
     <div class="w-1/3 mb-4">
-        <label for="user-id" class="block text-sm text-gray-500">User ID</label>
+        <div class="font-medium text-xl text-center mb-2">
+            Search user by ID and retrieve user's base information with list of accounts.
+        </div>
+        <label for="user-id" class="block text-sm text-gray-500">User ID:</label>
 
         <input v-model.lazy="userId" type="text" placeholder="12345" id="user-id"
                class="block mt-2 w-full placeholder-gray-400/70 rounded-lg border bg-white px-5 py-2.5 text-gray-700 focus:border-purple-400 focus:outline-none focus:ring focus:ring-purple-300 focus:ring-opacity-40"/>
@@ -33,7 +36,6 @@ export default {
             if (userId) {
                 axios.get(`/api/user/${this.userId}`)
                     .then((response) => {
-                        console.log(response.data.data[0]);
                         this.user = response.data.data[0];
                     })
                     .catch((error) => {

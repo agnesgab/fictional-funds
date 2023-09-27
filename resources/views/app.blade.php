@@ -14,19 +14,27 @@
     </head>
     <body class="bg-gray-200">
         <div id="app">
-            <nav class="bg-white shadow">
-                <div class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize">
-                    <router-link to="/users" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
-                        Users
-                    </router-link>
+            <nav class="bg-white shadow text-xl font-medium">
+                <div class="container flex items-center justify-between p-6 mx-auto text-gray-600 capitalize">
+                    <div class="flex items-center">
+                        <router-link to="/">
+                            <span class="text-2xl font-bold w-10 h-10 bg-black p-2"><span class="text-white">FI-FUNDS</span></span>
+                        </router-link>
+                    </div>
 
-                    <router-link to="/accounts" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
-                        Accounts
-                    </router-link>
+                    <div>
+                        <router-link to="/users" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
+                            Users
+                        </router-link>
 
-                    <router-link to="/new-transaction" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
-                        New transaction
-                    </router-link>
+                        <router-link to="/accounts" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
+                            Accounts
+                        </router-link>
+
+                        <router-link to="/new-transaction" active-class="border-b-2 border-blue-500" class="text-gray-800 transition-colors duration-300 transform mx-1.5 sm:mx-6">
+                            New transaction
+                        </router-link>
+                    </div>
                 </div>
             </nav>
 

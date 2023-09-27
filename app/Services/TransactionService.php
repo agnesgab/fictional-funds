@@ -22,34 +22,42 @@ class TransactionService
         $this->amount = $amount;
     }
 
-    public function applyExchangeRates()
+    public function applyExchangeRates($fromExchangeRate, $toExchangeRate, $amount)
     {
-        $this->amountWithBaseRate = $this->amount / $this->accountFrom->currency->exchange_rate;
-        $this->amountToTransfer = $this->amountWithBaseRate * $this->accountTo->currency->exchange_rate;
+        if ($this->accountBalanceIsPositive($this->accountFrom->balance, $this->amount)) {
+            $this->amountWithBaseRate = $amount / $fromExchangeRate;
+            $this->amountToTransfer = $this->amountWithBaseRate * $toExchangeRate;
 
-        return round($this->amountToTransfer, 2);
-    }
-
-    public function getTransactionData()
-    {
-        $this->accountFrom = Account::with('currency')->find($this->accountIdFrom);
-        $this->accountTo = Account::with('currency')->find($this->accountIdTo);
-
-        if ($this->accountFrom && $this->accountTo) {
-            return $this->accountBalanceIsPositive();
+            return round($this->amountToTransfer, 2);
         }
 
         return false;
     }
 
-    public function accountBalanceIsPositive()
+    public function getTransactionData($idFrom, $idTo)
     {
-        return $this->accountFrom->balance - $this->amount >= 0 ? $this->applyExchangeRates() : false;
+        $this->accountFrom = Account::with('currency')->find($idFrom);
+        $this->accountTo = Account::with('currency')->find($idTo);
+
+        if ($this->accountFrom && $this->accountTo) {
+            return $this->applyExchangeRates(
+                $this->accountFrom->currency->exchange_rate,
+                $this->accountTo->currency->exchange_rate,
+                $this->amount
+            );
+        }
+
+        return false;
+    }
+
+    public function accountBalanceIsPositive($accountBalance, $amount)
+    {
+        return $accountBalance - $amount >= 0;
     }
 
     public function validateTransaction()
     {
-        if ($this->getTransactionData()) {
+        if ($this->getTransactionData($this->accountIdFrom, $this->accountIdTo)) {
             $this->storeTransaction();
             $this->updateAccountBalances();
 

@@ -47,9 +47,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Account::class);
     }
-
-    public function getAccountCreatedAtAttribute()
-    {
-        return 'creaed at 12-12-1222';
-    }
 }

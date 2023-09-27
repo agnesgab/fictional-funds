@@ -1,6 +1,10 @@
 <template>
-    <div v-if="!transactionCompleted" class="rounded-xl border bg-white p-4 my-2 w-1/2">
-        <div class="w-full border-black flex flex-col items-center">
+    <div class="rounded-xl border bg-white p-4 my-4 w-1/2">
+        <div v-if="successMessage" class="text-center font-medium text-xl">
+            {{ successMessage }}
+        </div>
+
+        <div v-else class="w-full border-black flex flex-col items-center">
 
             <div class="mb-4">
                 <label for="amount" class="block text-sm text-gray-500">Transfer amount:</label>
@@ -15,7 +19,10 @@
                 There are not enough funds in sender's account.
             </div>
             <div v-if="amountToSend && updatedBalance > 0">
-                <button @click="completeTransaction"
+                <div v-if="validationError" class="text-center mt-2">
+                    <span class="text-red-500">{{ validationError }}</span>
+                </div>
+                <button v-else @click="completeTransaction"
                         class="bg-blue-500 text-white flex items-center px-4 py-2 transition-colors duration-300 transform rounded-md">
                     Complete transaction
                 </button>
@@ -26,24 +33,20 @@
             <span class="text-red-500">{{ transactionError }}</span>
         </div>
     </div>
-
-    <template v-else>
-        <TransactionSuccess></TransactionSuccess>
-    </template>
 </template>
 <script>
 import axios from "axios";
-import TransactionSuccess from "./TransactionSuccess.vue";
 
 export default {
-    components: {TransactionSuccess},
-    emits: ['transaction-completed'],
+    components: {},
     data() {
         return {
             amountToSend: null,
             updatedBalance: null,
             transactionAllowed: false,
             transactionError: null,
+            validationError: null,
+            successMessage: null,
         }
     },
     props: {
@@ -55,10 +58,6 @@ export default {
             type: Object,
             required: true,
         },
-        transactionCompleted: {
-            type: Boolean,
-            required: true,
-        }
     },
     methods: {
         updateAccountBalance() {
@@ -73,10 +72,9 @@ export default {
                 from: this.accountFrom.id,
                 to: this.accountTo.id,
                 amount: this.amountToSend,
-            }) // Adjust the URL to match your API route
-                .then((response) => {
+            }).then((response) => {
                     if (response.data === true) {
-                        this.$emit('transaction-completed', true);
+                        this.showSuccessMessage('Transaction successful!');
                     } else {
                         this.transactionError = 'Transaction failed. Please try again.'
                         this.amountToSend = null;
@@ -86,9 +84,26 @@ export default {
                     console.error(error);
                 });
         },
+        validateAmount() {
+            this.validationError = null;
+            const amount = parseFloat(this.amountToSend);
+
+            if (isNaN(amount) || amount <= 0) {
+                this.validationError = 'Transfer amount must be larger than 0';
+            }
+        },
+        showSuccessMessage(message) {
+            this.successMessage = message;
+
+            setTimeout(() => {
+                this.successMessage = '';
+                location.reload();
+            }, 2000);
+        },
     },
     watch: {
         amountToSend() {
+            this.validateAmount();
             this.updateAccountBalance();
         }
     },

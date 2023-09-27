@@ -5,7 +5,7 @@
                 Rows per page:
             </span>
             <div class="flex gap-1">
-                <button v-for="(option, index) in limitOptions" :key="index" @click="limit = option" :class="limit === option ? 'bg-blue-600 text-white' : ''"
+                <button v-for="(option, index) in limitOptions" :key="index" @click="limit = option" :class="limit === option ? 'font-bold' : ''"
                         class="items-center hidden px-4 py-2 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex">
                     {{ option }}
                 </button>
@@ -93,7 +93,7 @@
                         Previous
                     </button>
 
-                    <button v-for="pageNumber in pageNumbers" :key="pageNumber" @click="goToPage(pageNumber)" :class="currentPage === pageNumber ? 'bg-blue-600 text-white' : ''" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex">
+                    <button v-for="pageNumber in pageNumbers" :key="pageNumber" @click="goToPage(pageNumber)" :class="currentPage === pageNumber ? 'font-bold' : ''" class="items-center hidden px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md sm:flex">
                         {{ pageNumber }}
                     </button>
 
@@ -174,6 +174,7 @@ export default {
         },
         limit() {
             this.updateOffset();
+            this.goToPage(1);
         },
     },
 }

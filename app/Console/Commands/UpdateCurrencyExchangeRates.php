@@ -34,11 +34,12 @@ class UpdateCurrencyExchangeRates extends Command
                 $data = $response->json();
 
                 $service = (new ExchangeRateUpdateService($data));
-                $service->execute();
 
-                $this->info('Exchange rates updated successfully.');
-            } else {
-                $this->backupFetch();
+                if ($service->execute()) {
+                    $this->info('Exchange rates updated successfully.');
+                } else {
+                    $this->backupFetch();
+                }
             }
         } catch (\Exception $e) {
             $this->error('An error occurred: ' . $e->getMessage());
