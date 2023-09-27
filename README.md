@@ -120,7 +120,7 @@ docker-compose exec app php artisan test
 
 Sincerely, Agnese :relaxed:
 
-![Fictional Funds Homepage](homepage.png) 
+![Fictional Funds Homepage](home.png) 
 ![Fictional Funds Accounts](accounts.png)
 ![Fictional Funds Transaction](transaction.png)
 
