@@ -104,7 +104,17 @@ For using Docker:
    docker-compose exec app php artisan migrate --seed
    ```
 
-5. Access the application in your web browser locally.
+5. Run scheduled tasks to fetch data from exchange rate API hourly:
+   ```
+   php artisan schedule:work
+   ```
+
+6. Compile Vue.js assets:
+   ```
+   npm run dev
+   ```
+
+7. Access the application in your web browser locally.
 
 ## Testing
 
