@@ -13,6 +13,7 @@ class TransactionSeeder extends Seeder
      */
     public function run(): void
     {
+        // Exchange rates are not applied on seeded values
         for ($i = 0; $i < 40; $i++) {
             $faker = Factory::create();
 

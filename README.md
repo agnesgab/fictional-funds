@@ -58,9 +58,9 @@ For using Docker:
    DB_PASSWORD=your_database_password
    ```
 
-7. Run database migrations:
+7. Run database migrations with seeders:
    ```
-   php artisan migrate
+   php artisan migrate --seed
    ```
 
 ## Usage
@@ -99,9 +99,9 @@ For using Docker:
    docker-compose exec app php artisan key:generate
    ```
 
-4. Run the database migrations::
+4. Run the database migrations with seeders:
    ```
-   docker-compose exec app php artisan migrate
+   docker-compose exec app php artisan migrate --seed
    ```
 
 5. Access the application in your web browser locally.
